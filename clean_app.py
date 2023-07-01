@@ -61,7 +61,7 @@ def log_to_file(filename, dir_list):
     # writing list of all deleted folder to a file
     with open(filename, 'w') as file:
         for path in dir_list:
-            file.write(path)
+            file.write(os.path.relpath(path, os.path.dirname(filename)))
             file.write("\n")
 
 
