@@ -2,7 +2,6 @@ import logging
 import os
 import shutil
 import tempfile
-import time
 from argparse import ArgumentParser
 from pathlib import Path
 
@@ -37,6 +36,8 @@ def extract_file(file, where):
 
 def track_file(path, file):
     deleted_list = []
+    if len(os.listdir(path)) == 1:
+        path = path + "/"+os.listdir(path)[0]
     for dirpath, dirnames, files in os.walk(path):
         keep = False
         if os.path.basename(dirpath) == os.path.basename(path):
@@ -50,7 +51,7 @@ def track_file(path, file):
             delete_dir(dirpath)
             deleted_list.append(dirpath)
 
-    log_to_file(path+'\cleaned.txt', deleted_list)
+    log_to_file(path + '/cleaned.txt', deleted_list)
 
 
 def log_to_file(filename, dir_list):
