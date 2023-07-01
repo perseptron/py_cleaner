@@ -36,8 +36,8 @@ def extract_file(file, where):
 
 def track_file(path, file):
     deleted_list = []
-    if len(os.listdir(path)) == 1:
-        path = path + "/"+os.listdir(path)[0]
+    if len(os.listdir(path)) == 1:  # if zip contain root folder and then all files in it
+        path = os.path.join(path, os.listdir(path)[0])
     for dirpath, dirnames, files in os.walk(path):
         keep = False
         if os.path.basename(dirpath) == os.path.basename(path):
@@ -51,7 +51,7 @@ def track_file(path, file):
             delete_dir(dirpath)
             deleted_list.append(dirpath)
 
-    log_to_file(path + '/cleaned.txt', deleted_list)
+    log_to_file(os.path.join(path, 'cleaned.txt'), deleted_list)
 
 
 def log_to_file(filename, dir_list):
