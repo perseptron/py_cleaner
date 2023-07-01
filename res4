@@ -1,0 +1,39 @@
+Test name: test_clean_up
+Failure message:
+subprocess.CalledProcessError: Command '['diff', 'tests/data/test4_out', 'test_new']' returned non-zero exit status 1.
+
+show more
+def test_clean_up():
+for i in range(1, 8):
+print(f"Starting test{i}...")
+shutil.make_archive("test", "zip", root_dir=f"tests/data/test{i}")
+try:
+subprocess.check_call([sys.executable, "clean_app.py", "test.zip"])
+shutil.unpack_archive("test_new.zip", "test_new")
+> subprocess.check_call(["diff", f"tests/data/test{i}_out", "test_new"])
+
+tests/test_config.py:14:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+popenargs = (['diff', 'tests/data/test4_out', 'test_new'],), kwargs = {}
+retcode = 1, cmd = ['diff', 'tests/data/test4_out', 'test_new']
+
+def check_call(*popenargs, **kwargs):
+"""Run command with arguments. Wait for command to complete. If
+the exit code was zero then return, otherwise raise
+CalledProcessError. The CalledProcessError object will have the
+return code in the returncode attribute.
+
+The arguments are the same as for the call function. Example:
+
+check_call(["ls", "-l"])
+"""
+retcode = call(*popenargs, **kwargs)
+if retcode:
+cmd = kwargs.get("args")
+if cmd is None:
+cmd = popenargs[0]
+> raise CalledProcessError(retcode, cmd)
+E subprocess.CalledProcessError: Command '['diff', 'tests/data/test4_out', 'test_new']' returned non-zero exit status 1.
+
+/usr/local/lib/python3.9/subprocess.py:373: CalledProcessError
