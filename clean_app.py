@@ -19,7 +19,9 @@ def main():
 def clean_arch(file):
     """
     creating temporary directory, unzip archived file to it,
-    search for file __init__.py, if file not found in folder then delete that folder
+    search for file __init__.py, if file not found in folder
+    then delete that folder and all children folders
+    and make archive with cleaned data
     """
     with tempfile.TemporaryDirectory() as temp_dir:
         extract_file(file, temp_dir)
@@ -36,8 +38,10 @@ def extract_file(file, where):
 
 def track_file(path, file):
     deleted_list = []
-    if len(os.listdir(path)) == 1:  # if zip contain root folder and then all files in it
-        path = os.path.join(path, os.listdir(path)[0])
+    tempdir_list = os.listdir(path)
+    if len(tempdir_list) == 1:  # if zip contain root folder and then all files in it
+        if os.path.isdir(os.path.join(path, tempdir_list[0])):
+            path = os.path.join(path, tempdir_list[0])
     for dirpath, dirnames, files in os.walk(path):
         keep = False
         if os.path.basename(dirpath) == os.path.basename(path):
