@@ -54,8 +54,8 @@ def track_file(path, file):
         if not keep:
             delete_dir(dirpath)
             deleted_list.append(dirpath)
-
-    log_to_file(os.path.join(path, 'cleaned.txt'), deleted_list)
+    log_to_file('cleaned.txt', deleted_list)
+    # log_to_file(os.path.join(path, 'cleaned.txt'), deleted_list)
 
 
 def log_to_file(filename, dir_list):
