@@ -18,6 +18,10 @@ def main():
 
 
 def clean_arch(file):
+    """
+    creating temporary directory, unzip archived file to it,
+    search for file __init__.py, if file not found in folder then delete that folder
+    """
     with tempfile.TemporaryDirectory() as temp_dir:
         extract_file(file, temp_dir)
         track_file(temp_dir, "__init__.py")
@@ -45,10 +49,12 @@ def track_file(path, file):
         if not keep:
             delete_dir(dirpath)
             deleted_list.append(dirpath)
-    log_to_file('cleaned.txt', deleted_list)
+
+    log_to_file(path+'\cleaned.txt', deleted_list)
 
 
 def log_to_file(filename, dir_list):
+    # writing list of all deleted folder to a file
     with open(filename, 'w') as file:
         for path in dir_list:
             file.write(path)
