@@ -39,7 +39,6 @@ def extract_file(file, where):
 def track_file(path, file):
     deleted_list = []
     tempdir_list = os.listdir(path)
-    raise Exception(f"path = {path}, tempdir = {tempdir_list}")
     if len(tempdir_list) == 1:  # if zip contain root folder and then all files in it
         if os.path.isdir(os.path.join(path, tempdir_list[0])):  # it helped to pass tests 1-3
             path = os.path.join(path, tempdir_list[0])
